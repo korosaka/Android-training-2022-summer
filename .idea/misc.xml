@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.38958333333333334" />
-        <entry key="app/src/main/res/layout/fragment_grid_view.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/fragment_listview.xml" value="0.38958333333333334" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.12142857142857143" />
+        <entry key="app/src/main/res/layout/character_list_view_item.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_grid_view.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_listview.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_recycler_view.xml" value="0.38958333333333334" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.4036458333333333" />
       </map>
@@ -16,5 +17,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="SuppressABINotification">
+    <option name="modulesWithSuppressedNotConfigured">
+      <set>
+        <option value="AndroidTraining20220719.app" />
+      </set>
+    </option>
   </component>
 </project>
