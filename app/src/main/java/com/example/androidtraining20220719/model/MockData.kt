@@ -4,11 +4,11 @@ import android.content.Context
 import android.media.Image
 import com.example.androidtraining20220719.R
 
-class MockData(val myContext: Context) {
+class MockData(private val myContext: Context) {
 
     fun getCharactersData(): List<CharacterHeaderData> {
         val mutableList = mutableListOf<CharacterHeaderData>()
-        for (i in 0..12) {
+        for (i in 0..25) {
             mutableList.add(createRandomCharacterHeader())
         }
         return mutableList.toList()
