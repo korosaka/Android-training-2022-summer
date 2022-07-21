@@ -5,22 +5,19 @@
     android:id="@+id/bottom_navigation_view"
     app:startDestination="@id/item_list">
 
-    <fragment
+    <custom_fragment
         android:id="@+id/item_list"
         android:name="com.example.androidtraining20220719.view.fragments.ListviewFragment"
-        android:label="aaa"
         tools:layout="@layout/fragment_listview" />
 
-    <fragment
+    <custom_fragment
         android:id="@+id/item_recycler"
         android:name="com.example.androidtraining20220719.view.fragments.RecyclerViewFragment"
-        android:label="bbb"
         tools:layout="@layout/fragment_recycler_view" />
 
-    <fragment
+    <custom_fragment
         android:id="@+id/item_grid"
         android:name="com.example.androidtraining20220719.view.fragments.GridViewFragment"
-        android:label="ccc"
         tools:layout="@layout/fragment_grid_view" />
 
 </navigation>

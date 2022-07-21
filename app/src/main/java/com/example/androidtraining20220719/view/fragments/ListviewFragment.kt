@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.androidtraining20220719.R
+import com.example.androidtraining20220719.model.CharacterHeaderData
 import com.example.androidtraining20220719.model.MockData
 import com.example.androidtraining20220719.view.adapter.ListViewAdapter
 import kotlinx.android.synthetic.main.fragment_listview.*
@@ -13,11 +14,13 @@ import kotlinx.android.synthetic.main.fragment_listview.*
 
 class ListviewFragment : Fragment() {
 
+    lateinit var characters: List<CharacterHeaderData>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
 
         }
+        context?.let { characters = MockData(it).getCharactersData() }
     }
 
     override fun onCreateView(
@@ -31,7 +34,6 @@ class ListviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         context?.let {
-            val characters = MockData(it).getCharactersData()
             val adapter = ListViewAdapter(it, characters)
             characters_on_list_view.adapter = adapter
         }
@@ -42,8 +44,6 @@ class ListviewFragment : Fragment() {
         fun newInstance(param1: String, param2: String) =
             ListviewFragment().apply {
                 arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
                 }
             }
     }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidtraining20220719.R
+import com.example.androidtraining20220719.model.CharacterHeaderData
 import com.example.androidtraining20220719.model.MockData
 import com.example.androidtraining20220719.view.adapter.RecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_recycler_view.*
@@ -15,11 +16,13 @@ import kotlinx.android.synthetic.main.fragment_recycler_view.*
 
 class RecyclerViewFragment : Fragment() {
 
+    lateinit var characters: List<CharacterHeaderData>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
 
         }
+        context?.let { characters = MockData(it).getCharactersData() }
     }
 
     override fun onCreateView(
@@ -37,7 +40,6 @@ class RecyclerViewFragment : Fragment() {
 //            characters_recycler.layoutManager =
 //                LinearLayoutManager(it, LinearLayoutManager.VERTICAL, false)
             characters_recycler.layoutManager = GridLayoutManager(it, 2)
-            val characters = MockData(it).getCharactersData()
             val adapter = RecyclerAdapter(characters)
             characters_recycler.adapter = adapter
         }
