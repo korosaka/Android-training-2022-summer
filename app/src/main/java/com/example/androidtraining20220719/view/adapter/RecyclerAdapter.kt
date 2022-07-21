@@ -13,6 +13,8 @@ class RecyclerAdapter(private val characters: List<CharacterHeaderData>) :
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
+    var listener: RecyclerAdapterInterface? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
@@ -26,9 +28,16 @@ class RecyclerAdapter(private val characters: List<CharacterHeaderData>) :
 
         holder.itemView.recycler_character_tv.text = characterData.name
         holder.itemView.recycler_character_iv.setImageDrawable(characterData.image)
+        holder.itemView.setOnClickListener {
+            listener?.onClickItemView()
+        }
     }
 
     override fun getItemCount(): Int {
         return characters.size
+    }
+
+    interface RecyclerAdapterInterface {
+        fun onClickItemView()
     }
 }
