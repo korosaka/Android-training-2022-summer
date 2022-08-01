@@ -11,7 +11,7 @@ class MockData(private val myContext: Context) {
         for (i in 0..25) {
             mutableList.add(createRandomCharacterHeader())
         }
-        Thread.sleep(10000)
+        Thread.sleep(3000)
         return mutableList.toList()
     }
 

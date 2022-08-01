@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_listview.*
 
 class ListviewFragment : Fragment() {
 
-    lateinit var adapter: ListViewAdapter
+    private lateinit var adapter: ListViewAdapter
     private val viewModel: TopPageViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
