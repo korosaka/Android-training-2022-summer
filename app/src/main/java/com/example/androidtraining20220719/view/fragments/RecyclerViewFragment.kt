@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidtraining20220719.R
 import com.example.androidtraining20220719.model.CharacterHeaderData
 import com.example.androidtraining20220719.model.MockData
 import com.example.androidtraining20220719.view.adapter.RecyclerAdapter
+import com.example.androidtraining20220719.view_model.TopPageViewModel
 import kotlinx.android.synthetic.main.fragment_recycler_view.*
 
 
@@ -20,13 +22,12 @@ class RecyclerViewFragment :
     Fragment(),
     RecyclerAdapter.RecyclerAdapterInterface {
 
-    lateinit var characters: List<CharacterHeaderData>
+    private val viewModel: TopPageViewModel by activityViewModels()
+    private lateinit var adapter: RecyclerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-        context?.let { characters = MockData(it).getCharactersData() }
+        adapter = RecyclerAdapter(viewModel.characters.value!!)
     }
 
     override fun onCreateView(
@@ -44,21 +45,12 @@ class RecyclerViewFragment :
 //            characters_recycler.layoutManager =
 //                LinearLayoutManager(it, LinearLayoutManager.VERTICAL, false)
             characters_recycler.layoutManager = GridLayoutManager(it, 2)
-            val adapter = RecyclerAdapter(characters)
             adapter.listener = this
             characters_recycler.adapter = adapter
-        }
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RecyclerViewFragment().apply {
-                arguments = Bundle().apply {
-
-                }
+            viewModel.characters.observe(viewLifecycleOwner) {
+                adapter.notifyDataSetChanged()
             }
+        }
     }
 
     override fun onClickItemView() {
