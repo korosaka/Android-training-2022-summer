@@ -20,7 +20,7 @@ class MockData(private val myContext: Context) {
         val image = myContext.getDrawable(R.drawable.test_character_image)
         return CharacterHeaderData(
             id,
-            "Test Character (ID: $id)",
+            "(ID: $id) Test Character",
             null,
             image
         )
