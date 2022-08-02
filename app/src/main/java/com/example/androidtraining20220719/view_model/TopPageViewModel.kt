@@ -1,7 +1,6 @@
 package com.example.androidtraining20220719.view_model
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.androidtraining20220719.model.CharacterHeaderData
 import com.example.androidtraining20220719.model.MockData
@@ -21,12 +20,16 @@ class TopPageViewModel(application: Application) : AndroidViewModel(application)
      */
     private val localCharactersData: MutableList<CharacterHeaderData> = mutableListOf()
 
+    var statusMessage: MutableLiveData<String> = MutableLiveData()
+
     init {
+        statusMessage.value = "default"
         characters.value = localCharactersData
         fetchData()
     }
 
     private fun fetchData() {
+        updateStatusMessage("start fetching data")
         val context = getApplication<Application>().applicationContext
         viewModelScope.launch(Dispatchers.Main) {
             val data = withContext(Dispatchers.IO) {
@@ -34,11 +37,16 @@ class TopPageViewModel(application: Application) : AndroidViewModel(application)
             }
             localCharactersData.clear()
             for (character in data) {
-                delay(200)
+                delay(100)
                 localCharactersData.add(character)
                 // to be observed, the data need to be set after local data is updated
                 characters.value = localCharactersData
             }
+            updateStatusMessage("finish fetching data")
         }
+    }
+
+    private fun updateStatusMessage(message: String) {
+        statusMessage.value = message
     }
 }
