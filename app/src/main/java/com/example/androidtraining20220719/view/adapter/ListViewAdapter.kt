@@ -34,7 +34,7 @@ class ListViewAdapter(
 
         binding.characterData = characterList[position]
 
-        return  binding.root
+        return binding.root
     }
 
 

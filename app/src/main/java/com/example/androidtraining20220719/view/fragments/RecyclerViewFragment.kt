@@ -33,7 +33,8 @@ class RecyclerViewFragment :
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_recycler_view, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_recycler_view, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModelOnRecyclerViewFrag = viewModel
         return binding.root
@@ -54,7 +55,7 @@ class RecyclerViewFragment :
         }
     }
 
-    override fun onClickItemView() {
-        Toast.makeText(context, "item view was tapped!", Toast.LENGTH_SHORT).show()
+    override fun onClickItemView(characterId: String) {
+        Toast.makeText(context, "$characterId was tapped!", Toast.LENGTH_SHORT).show()
     }
 }
