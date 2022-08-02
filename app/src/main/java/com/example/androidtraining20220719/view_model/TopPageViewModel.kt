@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.androidtraining20220719.model.CharacterHeaderData
 import com.example.androidtraining20220719.model.MockData
+import com.example.androidtraining20220719.model.repositories.CharactersUrlRepository
 import kotlinx.coroutines.*
 
 
@@ -19,6 +20,7 @@ class TopPageViewModel(application: Application) : AndroidViewModel(application)
      * If the different instance is set to the value, notify method never work.
      */
     private val localCharactersData: MutableList<CharacterHeaderData> = mutableListOf()
+    private val charactersUrlRepo = CharactersUrlRepository()
 
     var statusMessage: MutableLiveData<String> = MutableLiveData()
 
@@ -33,6 +35,9 @@ class TopPageViewModel(application: Application) : AndroidViewModel(application)
         val context = getApplication<Application>().applicationContext
         viewModelScope.launch(Dispatchers.Main) {
             val data = withContext(Dispatchers.IO) {
+
+                val charactersURL = charactersUrlRepo.fetchCharactersApiUrl()
+
                 MockData(context).getCharactersData()
             }
             localCharactersData.clear()
