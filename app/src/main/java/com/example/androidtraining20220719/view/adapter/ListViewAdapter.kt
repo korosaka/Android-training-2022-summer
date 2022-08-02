@@ -24,7 +24,7 @@ class ListViewAdapter(
         binding =
             if (convertView == null) {
                 val itemBinding: CharacterListViewItemBinding =
-                    DataBindingUtil.inflate(layoutInflater, R.layout.character_list_view_item, parent, false)
+                    CharacterListViewItemBinding.inflate(layoutInflater, parent, false)
                 itemBinding.root.tag = itemBinding
                 itemBinding
             } else {
