@@ -1,11 +1,9 @@
 package com.example.androidtraining20220719.view_model
 
-import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.androidtraining20220719.model.CharacterHeaderData
-import com.example.androidtraining20220719.model.MockData
 import com.example.androidtraining20220719.model.repositories.CharactersRepository
-import com.example.androidtraining20220719.model.repositories.CharactersUrlRepository
 import com.example.androidtraining20220719.model.repositories.ImageRepository
 import kotlinx.coroutines.*
 
@@ -14,7 +12,6 @@ import kotlinx.coroutines.*
 class TopPageViewModel : ViewModel() {
 
     val characters = MutableLiveData<List<CharacterHeaderData>>()
-    var callback: Callback? = null
 
     /**
      * To keep same instance for List, localCharactersData is used
@@ -31,32 +28,31 @@ class TopPageViewModel : ViewModel() {
         updateLiveCharacters()
     }
 
-    fun fetchData() {
+    fun fetchCharactersData() {
         updateStatusMessage("start fetching data")
         viewModelScope.launch(Dispatchers.Main) {
-            val data = withContext(Dispatchers.IO) {
-                CharactersRepository().fetchCharactersExcludeImage()
-                //MockData().getCharactersData()
-            }
-            localCharactersData.clear()
-            localCharactersData.addAll(data)
-            // to be observed, the data need to be set after local data is updated
-            updateLiveCharacters()
-            updateStatusMessage("finish fetching data except images")
-
-            // start fetching each characters' image
-            val imageRepo = ImageRepository()
-            for (characterData in localCharactersData) {
-                val characterImage = withContext(Dispatchers.IO) {
-                    imageRepo.fetchImage(characterData.imageUrl)
-                }
-                characterData.image = characterImage
-                updateLiveCharacters()
-            }
-            updateStatusMessage("finish fetching data!!!!!!")
-            callback?.completeFetching()
+            fetchCharactersExcludeImage()
+            //it waits for the previous function's completion
+            fetchCharactersImage()
         }
     }
+
+    suspend fun fetchCharactersExcludeImage() {
+        val charactersList = withContext(Dispatchers.IO) {
+            fetchCharactersList()
+        }
+        localCharactersData.clear()
+        localCharactersData.addAll(charactersList)
+        // to be observed, the data need to be set after local data is updated
+        updateLiveCharacters()
+        updateStatusMessage("finish fetching data except images")
+    }
+
+    private fun fetchCharactersList(): List<CharacterHeaderData> {
+        return CharactersRepository().fetchCharactersExcludeImage()
+        //MockData().getCharactersData()
+    }
+
 
     private fun updateStatusMessage(message: String) {
         statusMessage.value = message
@@ -66,8 +62,14 @@ class TopPageViewModel : ViewModel() {
         characters.value = localCharactersData
     }
 
-    //for test
-    interface Callback {
-        fun completeFetching()
+    private suspend fun fetchCharactersImage() {
+        val imageRepo = ImageRepository()
+        for (characterData in localCharactersData) {
+            characterData.image = withContext(Dispatchers.IO) {
+                imageRepo.fetchImage(characterData.imageUrl)
+            }
+            updateLiveCharacters()
+        }
+        updateStatusMessage("finish fetching data!!!!!!")
     }
 }
