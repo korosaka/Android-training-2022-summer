@@ -6,6 +6,7 @@ import com.example.androidtraining20220719.model.CharacterHeaderData
 import com.example.androidtraining20220719.model.MockData
 import com.example.androidtraining20220719.model.repositories.CharactersRepository
 import com.example.androidtraining20220719.model.repositories.CharactersUrlRepository
+import com.example.androidtraining20220719.model.repositories.ImageRepository
 import kotlinx.coroutines.*
 
 
@@ -21,13 +22,12 @@ class TopPageViewModel(application: Application) : AndroidViewModel(application)
      * If the different instance is set to the value, notify method never work.
      */
     private val localCharactersData: MutableList<CharacterHeaderData> = mutableListOf()
-    private val charactersUrlRepo = CharactersUrlRepository()
 
     var statusMessage: MutableLiveData<String> = MutableLiveData()
 
     init {
         statusMessage.value = "default"
-        characters.value = localCharactersData
+        updateLiveCharacters()
         fetchData()
     }
 
@@ -41,12 +41,28 @@ class TopPageViewModel(application: Application) : AndroidViewModel(application)
             localCharactersData.clear()
             localCharactersData.addAll(data)
             // to be observed, the data need to be set after local data is updated
-            characters.value = localCharactersData
-            updateStatusMessage("finish fetching data")
+            updateLiveCharacters()
+            updateStatusMessage("finish fetching data except images")
+
+            // start fetching each characters' image
+            val imageRepo = ImageRepository()
+            for (characterData in localCharactersData) {
+                val characterImage = withContext(Dispatchers.IO) {
+                    imageRepo.fetchImage(characterData.imageUrl)
+                }
+                characterData.image = characterImage
+                updateLiveCharacters()
+            }
+            updateStatusMessage("finish fetching data!!!!!!")
+
         }
     }
 
     private fun updateStatusMessage(message: String) {
         statusMessage.value = message
+    }
+
+    private fun updateLiveCharacters() {
+        characters.value = localCharactersData
     }
 }
