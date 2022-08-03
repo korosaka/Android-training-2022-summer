@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.androidtraining20220719.model.CharacterHeaderData
 import com.example.androidtraining20220719.model.MockData
+import com.example.androidtraining20220719.model.repositories.CharactersRepository
 import com.example.androidtraining20220719.model.repositories.CharactersUrlRepository
 import kotlinx.coroutines.*
 
@@ -32,21 +33,15 @@ class TopPageViewModel(application: Application) : AndroidViewModel(application)
 
     private fun fetchData() {
         updateStatusMessage("start fetching data")
-        val context = getApplication<Application>().applicationContext
         viewModelScope.launch(Dispatchers.Main) {
             val data = withContext(Dispatchers.IO) {
-
-                val charactersURL = charactersUrlRepo.fetchCharactersApiUrl()
-
-                MockData(context).getCharactersData()
+                CharactersRepository().fetchCharactersExcludeImage()
+                //MockData(getApplication<Application>().applicationContext).getCharactersData()
             }
             localCharactersData.clear()
-            for (character in data) {
-                delay(100)
-                localCharactersData.add(character)
-                // to be observed, the data need to be set after local data is updated
-                characters.value = localCharactersData
-            }
+            localCharactersData.addAll(data)
+            // to be observed, the data need to be set after local data is updated
+            characters.value = localCharactersData
             updateStatusMessage("finish fetching data")
         }
     }
