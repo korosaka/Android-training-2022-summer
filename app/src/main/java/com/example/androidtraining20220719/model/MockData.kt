@@ -22,7 +22,7 @@ class MockData(private val myContext: Context) {
         return CharacterHeaderData(
             id,
             "(ID: $id) Test Character",
-            "null",
+            "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
             image
         )
     }
