@@ -14,6 +14,7 @@ import kotlinx.coroutines.*
 class TopPageViewModel : ViewModel() {
 
     val characters = MutableLiveData<List<CharacterHeaderData>>()
+    var callback: Callback? = null
 
     /**
      * To keep same instance for List, localCharactersData is used
@@ -28,10 +29,9 @@ class TopPageViewModel : ViewModel() {
     init {
         statusMessage.value = "default"
         updateLiveCharacters()
-        fetchData()
     }
 
-    private fun fetchData() {
+    fun fetchData() {
         updateStatusMessage("start fetching data")
         viewModelScope.launch(Dispatchers.Main) {
             val data = withContext(Dispatchers.IO) {
@@ -54,7 +54,7 @@ class TopPageViewModel : ViewModel() {
                 updateLiveCharacters()
             }
             updateStatusMessage("finish fetching data!!!!!!")
-
+            callback?.completeFetching()
         }
     }
 
@@ -64,5 +64,10 @@ class TopPageViewModel : ViewModel() {
 
     private fun updateLiveCharacters() {
         characters.value = localCharactersData
+    }
+
+    //for test
+    interface Callback {
+        fun completeFetching()
     }
 }
