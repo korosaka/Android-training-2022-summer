@@ -17,6 +17,7 @@
             android:id="@+id/recycler_character_iv"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:background="#808080"
             android:scaleType="fitXY"
             app:imageDrawable="@{characterDataOnRecycler.image}"
             app:layout_constraintStart_toStartOf="parent"
