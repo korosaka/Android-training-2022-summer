@@ -2,6 +2,7 @@ package com.example.androidtraining20220719.model
 
 import android.content.Context
 import android.media.Image
+import androidx.core.graphics.drawable.toBitmap
 import com.example.androidtraining20220719.R
 
 class MockData(private val myContext: Context) {
@@ -17,11 +18,11 @@ class MockData(private val myContext: Context) {
 
     private fun createRandomCharacterHeader(): CharacterHeaderData {
         val id = (1..20).random().toString()
-        val image = myContext.getDrawable(R.drawable.test_character_image)
+        val image = myContext.getDrawable(R.drawable.test_character_image)?.toBitmap()
         return CharacterHeaderData(
             id,
             "(ID: $id) Test Character",
-            null,
+            "null",
             image
         )
     }

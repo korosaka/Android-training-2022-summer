@@ -19,7 +19,7 @@
             android:layout_height="60dp"
             android:background="#808080"
             android:scaleType="fitXY"
-            app:imageDrawable="@{characterDataOnRecycler.image}"
+            app:imageBitmap="@{characterDataOnRecycler.image}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

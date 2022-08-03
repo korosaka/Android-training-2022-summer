@@ -18,7 +18,7 @@
             android:layout_height="80dp"
             android:background="#808080"
             android:scaleType="fitXY"
-            app:imageDrawable="@{characterData.image}"
+            app:imageBitmap="@{characterData.image}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

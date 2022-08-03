@@ -50,6 +50,7 @@ class RecyclerViewFragment :
             adapter.listener = this
             characters_recycler.adapter = adapter
             viewModel.characters.observe(viewLifecycleOwner) {
+                //TODO don't notify everything!
                 adapter.notifyDataSetChanged()
             }
         }
