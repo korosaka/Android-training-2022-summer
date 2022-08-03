@@ -11,7 +11,7 @@ import kotlinx.coroutines.*
 
 
 // To use context in ViewModel, AndroidViewModel is used
-class TopPageViewModel(application: Application) : AndroidViewModel(application) {
+class TopPageViewModel : ViewModel() {
 
     val characters = MutableLiveData<List<CharacterHeaderData>>()
 
@@ -36,7 +36,7 @@ class TopPageViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch(Dispatchers.Main) {
             val data = withContext(Dispatchers.IO) {
                 CharactersRepository().fetchCharactersExcludeImage()
-                //MockData(getApplication<Application>().applicationContext).getCharactersData()
+                //MockData().getCharactersData()
             }
             localCharactersData.clear()
             localCharactersData.addAll(data)

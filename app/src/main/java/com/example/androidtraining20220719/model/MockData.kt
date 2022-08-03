@@ -1,11 +1,7 @@
 package com.example.androidtraining20220719.model
 
-import android.content.Context
-import android.media.Image
-import androidx.core.graphics.drawable.toBitmap
-import com.example.androidtraining20220719.R
 
-class MockData(private val myContext: Context) {
+class MockData {
 
     fun getCharactersData(): List<CharacterHeaderData> {
         val mutableList = mutableListOf<CharacterHeaderData>()
@@ -18,12 +14,12 @@ class MockData(private val myContext: Context) {
 
     private fun createRandomCharacterHeader(): CharacterHeaderData {
         val id = (1..20).random().toString()
-        val image = myContext.getDrawable(R.drawable.test_character_image)?.toBitmap()
+//        val image = myContext.getDrawable(R.drawable.test_character_image)?.toBitmap()
         return CharacterHeaderData(
             id,
             "(ID: $id) Test Character",
             "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-            image
+            null
         )
     }
 
