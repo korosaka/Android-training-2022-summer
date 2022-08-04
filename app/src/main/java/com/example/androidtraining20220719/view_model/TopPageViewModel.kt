@@ -7,8 +7,10 @@ import com.example.androidtraining20220719.repositories.ImageRepository
 import kotlinx.coroutines.*
 
 
-// To use context in ViewModel, AndroidViewModel is used
-class TopPageViewModel : ViewModel() {
+// if you wanna use context in ViewModel, AndroidViewModel should be used
+class TopPageViewModel(
+    private val charactersRepo: CharactersRepository = CharactersRepository.newInstance()
+) : ViewModel() {
 
     val characters = MutableLiveData<List<CharacterHeaderData>>()
 
@@ -30,13 +32,13 @@ class TopPageViewModel : ViewModel() {
     fun fetchCharactersData() {
         updateStatusMessage("start fetching data")
         viewModelScope.launch(Dispatchers.Main) {
-            fetchCharactersExcludeImage()
+            fetchCharactersExceptImage()
             //it waits for the previous function's completion
             fetchCharactersImage()
         }
     }
 
-    suspend fun fetchCharactersExcludeImage() {
+    suspend fun fetchCharactersExceptImage() {
         val charactersList = withContext(Dispatchers.IO) {
             fetchCharactersList()
         }
@@ -48,7 +50,7 @@ class TopPageViewModel : ViewModel() {
     }
 
     private fun fetchCharactersList(): List<CharacterHeaderData> {
-        return CharactersRepository().fetchCharactersExcludeImage()
+        return charactersRepo.fetchCharactersExceptImage()
         //MockData().getCharactersData()
     }
 
