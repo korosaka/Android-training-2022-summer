@@ -1,10 +1,9 @@
 package com.example.androidtraining20220719.view_model
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.androidtraining20220719.model.CharacterHeaderData
-import com.example.androidtraining20220719.model.repositories.CharactersRepository
-import com.example.androidtraining20220719.model.repositories.ImageRepository
+import com.example.androidtraining20220719.repositories.CharactersRepository
+import com.example.androidtraining20220719.repositories.ImageRepository
 import kotlinx.coroutines.*
 
 
